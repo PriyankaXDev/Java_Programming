@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+class PerfectSquares {
+    static int digitSum(int num) {
+        int sum = 0;
+
+        while (num > 0) {
+            sum = sum + (num % 10);
+            num = num / 10;
+        }
+
+        return sum;
+    }
+
+    static boolean isPerfectSquare(int num) {
+        int root = (int) Math.sqrt(num);
+        return root * root == num;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter lower range: ");
+        int lower = sc.nextInt();
+
+        System.out.print("Enter upper range: ");
+        int upper = sc.nextInt();
+
+        if (lower < 0 || upper < 0 || lower > upper) {
+            System.out.println("Invalid range");
+        } else {
+            System.out.print("[");
+
+            boolean first = true;
+
+            for (int i = lower; i <= upper; i++) {
+                if (isPerfectSquare(i) && digitSum(i) < 10) {
+
+                    if (!first) {
+                        System.out.print(", ");
+                    }
+
+                    System.out.print(i);
+                    first = false;
+                }
+            }
+
+            System.out.println("]");
+        }
+
+        sc.close();
+    }
+}
