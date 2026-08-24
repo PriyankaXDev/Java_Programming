@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+class BankAccount {
+
+    String name;
+    int accountNumber;
+    String accountType;
+    double balance = 10000;
+
+    void readDetails(Scanner sc) {
+        System.out.print("Enter Account Number: ");
+        accountNumber = sc.nextInt();
+
+        sc.nextLine();
+
+        System.out.print("Enter Depositor Name: ");
+        name = sc.nextLine();
+
+        System.out.print("Enter Account Type (S/C): ");
+        accountType = sc.nextLine();
+    }
+
+    void deposit(double amount) {
+        if (amount > 0) {
+            balance = balance + amount;
+            System.out.println("Amount Deposited: " + amount);
+        } else {
+            System.out.println("Invalid deposit amount");
+        }
+    }
+
+    void withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid withdrawal amount");
+        } else if (balance - amount >= 500) {
+            balance = balance - amount;
+            System.out.println("Amount Withdrawn: " + amount);
+        } else {
+            System.out.println("Withdrawal not possible");
+            System.out.println("Minimum balance of Rs.500 must be maintained");
+        }
+    }
+
+    void display() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Depositor Name: " + name);
+        System.out.println("Account Type: " + accountType);
+        System.out.println("Balance: " + balance);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        BankAccount account = new BankAccount();
+
+        account.readDetails(sc);
+
+        System.out.print("Enter amount to deposit/withdraw: ");
+        double amount = sc.nextDouble();
+
+        account.deposit(amount);
+
+        account.display();
+
+        sc.close();
+    }
+}
