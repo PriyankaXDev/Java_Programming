@@ -1,0 +1,56 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int[][] mat = {
+            {1, 1, 0, 0, 0},
+            {1, 1, 1, 1, 0},
+            {1, 0, 0, 0, 0},
+            {1, 1, 0, 0, 0},
+            {1, 1, 1, 1, 1}
+        };
+
+        int k = 3;
+
+        Integer[] rows = new Integer[mat.length];
+
+        for (int i = 0; i < mat.length; i++) {
+            rows[i] = i;
+        }
+
+        Arrays.sort(rows, (a, b) -> {
+            int soldiersA = 0;
+            int soldiersB = 0;
+
+            for (int x : mat[a]) {
+                soldiersA += x;
+            }
+
+            for (int x : mat[b]) {
+                soldiersB += x;
+            }
+
+            if (soldiersA != soldiersB) {
+                return soldiersA - soldiersB;
+            }
+
+            return a - b;
+        });
+
+        System.out.print("[");
+
+        for (int i = 0; i < k; i++) {
+            System.out.print(rows[i]);
+
+            if (i < k - 1) {
+                System.out.print(", ");
+            }
+        }
+
+        System.out.println("]");
+
+        sc.close();
+    }
+}
