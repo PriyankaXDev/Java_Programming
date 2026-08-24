@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+class NumberSquare {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the lower range: ");
+        int lower = sc.nextInt();
+
+        System.out.print("Enter the upper range: ");
+        int upper = sc.nextInt();
+
+        if (lower < 0 || upper < 0 || lower > upper) {
+            System.out.println("Invalid range");
+        } else {
+            System.out.print("[");
+
+            for (int i = lower; i <= upper; i++) {
+                int square = i * i;
+
+                System.out.print("(" + i + ", " + square + ")");
+
+                if (i < upper) {
+                    System.out.print(", ");
+                }
+            }
+
+            System.out.println("]");
+        }
+
+        sc.close();
+    }
+}
