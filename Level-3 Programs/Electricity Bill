@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Consumer No: ");
+        int consumerNo = sc.nextInt();
+
+        sc.nextLine();
+
+        System.out.print("Enter Consumer Name: ");
+        String consumerName = sc.nextLine();
+
+        System.out.print("Enter Previous Month Reading: ");
+        int previousReading = sc.nextInt();
+
+        System.out.print("Enter Current Month Reading: ");
+        int currentReading = sc.nextInt();
+
+        if (previousReading < 0 || currentReading < 0 || currentReading < previousReading) {
+            System.out.println("Invalid meter reading");
+        } else {
+            int units = currentReading - previousReading;
+            double bill = 0;
+
+            if (units <= 100) {
+                bill = units * 1;
+            } else if (units <= 200) {
+                bill = 100 * 1;
+                bill += (units - 100) * 2.5;
+            } else if (units <= 500) {
+                bill = 100 * 1;
+                bill += 100 * 2.5;
+                bill += (units - 200) * 4;
+            } else {
+                bill = 100 * 1;
+                bill += 100 * 2.5;
+                bill += 300 * 4;
+                bill += (units - 500) * 6;
+            }
+
+            System.out.println("\n--- Electricity Bill ---");
+            System.out.println("Consumer No: " + consumerNo);
+            System.out.println("Consumer Name: " + consumerName);
+            System.out.println("Units Consumed: " + units);
+            System.out.println("Bill Amount: Rs." + bill);
+        }
+
+        sc.close();
+    }
+}
