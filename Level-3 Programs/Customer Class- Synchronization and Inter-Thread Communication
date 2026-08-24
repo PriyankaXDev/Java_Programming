@@ -1,0 +1,84 @@
+import java.util.Scanner;
+
+class Customer {
+
+    int AccountNo;
+    String AccName;
+    int Balance = 10000;
+
+    synchronized void withdraw(int amount) {
+
+        System.out.println("Withdraw requested: " + amount);
+
+        try {
+            while (Balance < amount) {
+                System.out.println("Insufficient balance.");
+                System.out.println("Withdrawal waiting for deposit...");
+
+                wait();
+            }
+
+            Balance = Balance - amount;
+
+            System.out.println("Withdraw operation success");
+            System.out.println("Balance amount: " + Balance);
+
+        } catch (InterruptedException e) {
+            System.out.println("Withdrawal interrupted");
+        }
+    }
+
+    synchronized void deposit(int amount) {
+
+        System.out.println("Deposit amount: " + amount);
+
+        Balance = Balance + amount;
+
+        System.out.println("Deposit successful");
+        System.out.println("Balance after deposit: " + Balance);
+
+        notify();
+    }
+}
+
+public class BankThread {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        Customer customer = new Customer();
+
+        System.out.print("Enter withdrawal amount: ");
+        int withdrawAmount = sc.nextInt();
+
+        System.out.print("Enter deposit amount: ");
+        int depositAmount = sc.nextInt();
+
+        Thread withdrawThread = new Thread(() -> {
+            customer.withdraw(withdrawAmount);
+        });
+
+        Thread depositThread = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("Thread interrupted");
+            }
+
+            customer.deposit(depositAmount);
+        });
+
+        withdrawThread.start();
+        depositThread.start();
+
+        try {
+            withdrawThread.join();
+            depositThread.join();
+        } catch (InterruptedException e) {
+            System.out.println("Main thread interrupted");
+        }
+
+        sc.close();
+    }
+}
