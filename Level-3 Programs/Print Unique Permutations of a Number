@@ -1,0 +1,56 @@
+import java.util.Scanner;
+
+class UniquePermutations {
+
+    static void swap(char[] arr, int i, int j) {
+        char temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    static void generate(char[] arr, int index) {
+
+        if (index == arr.length) {
+            System.out.println(new String(arr));
+            return;
+        }
+
+        for (int i = index; i < arr.length; i++) {
+
+            boolean duplicate = false;
+
+            for (int j = index; j < i; j++) {
+                if (arr[j] == arr[i]) {
+                    duplicate = true;
+                    break;
+                }
+            }
+
+            if (duplicate) {
+                continue;
+            }
+
+            swap(arr, index, i);
+
+            generate(arr, index + 1);
+
+            swap(arr, index, i);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Given Number: ");
+        String number = sc.next();
+
+        if (number.startsWith("-")) {
+            System.out.println("Invalid input");
+        } else {
+            System.out.println("Permutations are:");
+            generate(number.toCharArray(), 0);
+        }
+
+        sc.close();
+    }
+}
